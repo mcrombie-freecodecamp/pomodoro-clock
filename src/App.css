@@ -1,6 +1,35 @@
+/* --------------------------------- */
+/* VARIABLES */
+/* --------------------------------- */
+
+:root{
+  --button-normal:#006266;
+  --button-hover:#1B1464;
+  --button-selected:#1B1464;
+  --shadow-1:rgb(49, 43, 43);
+}
+
+/* --------------------------------- */
+/* TYPOGRAPHY */
+/* --------------------------------- */
+
 h1{
   text-align:center;
 }
+
+.larger-text {
+  font-size: 2.5em; }
+
+.white-text{
+  color:#d8e0db;
+}
+
+.smaller-text {
+  font-size: 1.5em; }
+
+/* --------------------------------- */
+/* CLOCK DESIGN */
+/* --------------------------------- */
 #beep{
   display:none;
 }
@@ -66,15 +95,7 @@ h1{
     justify-content: space-around;
     align-items: center; }
 
-.larger-text {
-  font-size: 2.5em; }
 
-.white-text{
-  color:#d8e0db;
-}
-
-.smaller-text {
-  font-size: 1.5em; }
 
 .boxed {
   background: #faf0f0;
@@ -82,3 +103,37 @@ h1{
   text-align: center;
   border-radius: 50%;
   border: 1px solid #272525; }
+
+/* --------------------------------- */
+/* BUTTONS */
+/* --------------------------------- */
+.btn{
+  background-color:var(--button-normal);
+  border:none;
+  border-radius: 1rem;
+  box-shadow: 0 6px var(--shadow-1);
+  color:#ffffff;
+  padding:1.5rem;
+  text-decoration: none;
+  cursor:pointer;
+  outline: none;
+  font-family: 'Happy Monkey', cursive;
+  height:50%;
+  margin:1rem;
+
+
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  
+}
+
+.btn:hover{
+  background-color:var(--button-hover);
+}
+
+.btn:active{
+  background-color:var(--button-selected);
+  box-shadow: 0 3px var(--shadow-1);
+  transform: translateY(4px);
+}
+

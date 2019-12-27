@@ -19,7 +19,7 @@ class PomodoroClock extends React.Component {
   constructor(props) {
     super(props);
     this.state = DEFAULT
-    // OUTDATED BINDINGS?
+    // OUTDATED BINDINGS
     this.runTimer = this.runTimer.bind(this);
     this.startOrStopSession = this.startOrStopSession.bind(this);
     this.switchType = this.switchType.bind(this);
@@ -164,11 +164,9 @@ class PomodoroClock extends React.Component {
   }
   render() {
     return (
-
       <div id="pomodoro-clock-container">
         {/* DRUMBEAT AUDIO TO DENOTE TRANSITIONS */}
         <audio id="beep" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3" controls autoplay></audio>
-
         <h1>Pomodoro Clock</h1>
         {/* TWO BUBBLES WITH ICONS STRICTLY FOR AESTHETIC APPEAL */}
         <div id="bubbles-container">
@@ -183,8 +181,8 @@ class PomodoroClock extends React.Component {
             <div id="break-label" className="smaller-text white-text">Break Length</div>
             <div id="break-length" className="smaller-text boxed">{this.state.breakLength}</div>
             <div className="length-box__buttons">
-              <button id="break-decrement" onClick={this.decrementBreak}><i className="fa fa-minus"></i></button>
-              <button id="break-increment" onClick={this.incrementBreak}><i className="fa fa-plus"></i></button>
+              <button className="btn" id="break-decrement" onClick={this.decrementBreak}><i className="fa fa-minus"></i></button>
+              <button className="btn" id="break-increment" onClick={this.incrementBreak}><i className="fa fa-plus"></i></button>
             </div>
           </div>
           {/* RIGHT LENGTH BOX */}
@@ -192,8 +190,8 @@ class PomodoroClock extends React.Component {
             <div id="session-label" className="smaller-text white-text">Session Length</div>
             <div id="session-length" className="smaller-text boxed">{this.state.sessionLength}</div>
             <div className="length-box__buttons">
-              <button id="session-decrement" onClick={this.decrementSession}><i className="fa fa-minus"></i></button>
-              <button id="session-increment" onClick={this.incrementSession}><i className="fa fa-plus"></i></button>
+              <button className="btn" id="session-decrement" onClick={this.decrementSession}><i className="fa fa-minus"></i></button>
+              <button className="btn" id="session-increment" onClick={this.incrementSession}><i className="fa fa-plus"></i></button>
             </div>
           </div>
         </div>
@@ -203,13 +201,11 @@ class PomodoroClock extends React.Component {
             <div id="timer-label" className="larger-text white-text">{this.state.type}</div>
             <div id="time-left" className="larger-text boxed">{this.padWithZero(this.state.remainingMinutes)}:{this.padWithZero(this.state.remainingSeconds)}</div>
             <div id="timer-container__circle__buttons">
-              <button id="start_stop" onClick={this.startOrStopSession}><i className="fa fa-play"></i> <i className="fa fa-pause"></i></button>
+              <button className="btn" id="start_stop" onClick={this.startOrStopSession}><i className="fa fa-play"></i> <i className="fa fa-pause"></i></button>
               {/* switch to pause icon while running */}
-              <button id="reset" onClick={this.reset}><i className="fa fa-refresh"></i></button>
+              <button className="btn" id="reset" onClick={this.reset}><i className="fa fa-refresh"></i></button>
             </div>
-
           </div>
-
         </div>
       </div>
     );
