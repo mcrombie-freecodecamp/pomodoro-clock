@@ -1,13 +1,403 @@
-body {
+/* ── Reset ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ── Theme variables ─────────────────────────────────────── */
+:root {
+  --phase-color: #e53e3e; /* default; overridden by JS per phase */
+
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --text: #1a202c;
+  --text-muted: #718096;
+  --border: #e2e8f0;
+  --ring-track: #edf2f7;
+  --btn-ghost-bg: #edf2f7;
+  --btn-ghost-hover: #e2e8f0;
+  --btn-ghost-text: #4a5568;
+  --dot-inactive: #e2e8f0;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme='dark'] {
+  --bg: #0f1117;
+  --surface: #1a1f2e;
+  --text: #e2e8f0;
+  --text-muted: #718096;
+  --border: #2d3748;
+  --ring-track: #2d3748;
+  --btn-ghost-bg: #2d3748;
+  --btn-ghost-hover: #4a5568;
+  --btn-ghost-text: #a0aec0;
+  --dot-inactive: #2d3748;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ── Root / layout ───────────────────────────────────────── */
+#root {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.app {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+[data-theme='dark'] .card {
+  border: 1px solid var(--border);
+}
+
+/* ── Card header ─────────────────────────────────────────── */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.125rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.375rem;
+}
+
+/* ── Card body ───────────────────────────────────────────── */
+.card-body {
+  padding: 2rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+/* ── Card footer ─────────────────────────────────────────── */
+.card-footer {
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.shortcut-hint {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ── Icon buttons (header) ───────────────────────────────── */
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.icon-btn:hover {
+  background: var(--btn-ghost-bg);
+  color: var(--text);
+}
+
+.icon-btn--active {
+  color: var(--phase-color);
+}
+
+.icon-btn--muted {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Theme toggle ────────────────────────────────────────── */
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--btn-ghost-bg);
+  color: var(--text);
+}
+
+/* ── Session dots ────────────────────────────────────────── */
+.session-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.session-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  transition:
+    background-color 0.35s ease,
+    transform 0.2s ease;
+}
+
+.session-dot--active {
+  background: var(--phase-color);
+  transform: scale(1.2);
+}
+
+.session-dot--inactive {
+  background: var(--dot-inactive);
+}
+
+/* ── Timer ring ──────────────────────────────────────────── */
+.timer-ring-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.timer-ring-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ring-track {
+  stroke: var(--ring-track);
+  fill: none;
+  transition: stroke 0.3s ease;
+}
+
+.ring-progress {
+  stroke: var(--phase-color);
+  fill: none;
+  stroke-linecap: round;
+}
+
+.timer-ring-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.timer-phase-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.timer-time {
+  font-size: 3.375rem;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+@keyframes ring-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.timer-ring-wrapper.running {
+  animation: ring-pulse 2.5s ease-in-out infinite;
+}
+
+/* ── Controls ────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.375rem;
+  border-radius: 100px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition:
+    background-color 0.25s ease,
+    filter 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.25s ease;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn--primary {
+  background: var(--phase-color);
+  color: #ffffff;
+  min-width: 100px;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn--primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn--ghost {
+  background: var(--btn-ghost-bg);
+  color: var(--btn-ghost-text);
+}
+
+.btn--ghost:hover {
+  background: var(--btn-ghost-hover);
+  color: var(--text);
+}
+
+/* ── Length controls ─────────────────────────────────────── */
+.length-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  width: 100%;
+}
+
+.length-divider {
+  width: 1px;
+  height: 44px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.length-control {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.length-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.stepper-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--btn-ghost-bg);
+  color: var(--text);
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.stepper-btn:hover:not(:disabled) {
+  background: var(--btn-ghost-hover);
+}
+
+.stepper-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.stepper-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
+  text-align: center;
+  color: var(--text);
+}
+
+.length-unit {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
 }
