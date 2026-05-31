@@ -9,6 +9,7 @@ import TimerRing from './components/TimerRing';
 import SessionDots from './components/SessionDots';
 import LengthControl from './components/LengthControl';
 import ThemeToggle from './components/ThemeToggle';
+import LavaLamp from './components/LavaLamp';
 
 const PHASE_COLORS: Record<Phase, { light: string; dark: string }> = {
   session: { light: '#e53e3e', dark: '#fc8181' },
@@ -64,9 +65,12 @@ export default function App() {
 
   const { phase, secondsLeft, isRunning, sessionsCompleted, settings } = state;
   const sessionsDoneInCycle = sessionsCompleted % settings.sessionsUntilLongBreak;
+  const progress = phaseDurationSecs > 0 ? 1 - secondsLeft / phaseDurationSecs : 0;
 
   return (
-    <div className="app">
+    <div className="app-shell">
+      <LavaLamp progress={progress} />
+      <div className="app-center">
       <div className="card">
         <header className="card-header">
           <h1 className="app-title">Pomodoro</h1>
@@ -149,6 +153,7 @@ export default function App() {
         <footer className="card-footer">
           <p className="shortcut-hint">Space to start / pause · R to reset</p>
         </footer>
+      </div>
       </div>
     </div>
   );
